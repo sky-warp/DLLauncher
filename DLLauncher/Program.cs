@@ -22,6 +22,7 @@ namespace DLLauncher
         //which stored returned result of GetAppPath function with input parameter.
         static void Main(string[] args)
         {
+            Console.WriteLine("Enter the game: ");
             string input = Console.ReadLine();
 
             string appPath = GetAppPath(input);
@@ -49,8 +50,12 @@ namespace DLLauncher
         {
             switch(command.ToLower())
             {
+                //Example for Steam games
                 case "deadlock":
                     return @"steam://rungameid/1422450";
+                //Example for non-Steam games
+                case "factorio":
+                    return @"F:\Factorio\bin\x64\factorio.exe";
                 default:
                     return null; 
             }
