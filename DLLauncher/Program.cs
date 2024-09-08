@@ -1,16 +1,12 @@
 ﻿/*
- This programm will launch any games which specifed in GetAppPath
-function. F.e. I want to launch DOTA on my PC. I just run this programm and input 
-relevant alias for this game. Input "dota" will return path for any Steam game, which contain 
-game ID (steam://rungameid/<game ID>). Any other game on your machine can be launch 
-by specified the absolute path for this game.
+ So I rebuild this programm for now, so it can only accept Steam ID of any Steam game and launch it.
+ Just input any Steam game ID in CMD and you launch specified game!
 
-Its kinda difficult, because when you install any new game you 
-must indicate it in function. Plus you need to remember every alias in programm.
+ Now Im trying to implement a feature which would give access to search game by its name and automatically
+ Take its ID from SteamDB web site.
 
-Anyway, this is my first program.
+ IDK how much would it take. Just dont wanna lose this prototype for Steam-only)
  */
-
 using System;
 using System.Diagnostics;
 
@@ -18,50 +14,60 @@ namespace DLLauncher
 {
     class Program
     {
-        //Main function which prompt user to input alias. Here also declare and initialize appPath variable
-        //which stored returned result of GetAppPath function with input parameter.
         static void Main(string[] args)
         {
-            Console.WriteLine("Enter the game: ");
-            string input = Console.ReadLine();
-
-            string appPath = GetAppPath(input);
-
-            if (input == null)
+            while (true)
             {
-                Console.WriteLine("Command is unknown");
-            }
-            else
-            {
-                Console.WriteLine($"Launching path: {appPath}");
-            }
+                //Base nvigation
+                Console.Write("Navigation:\tc-Clear\t\tq-Quit\nEnter the Steam ID: ");
+                string input = Console.ReadLine();
 
-            //This code launching game by using appPath parameter for LaunchApplication.
-            //Noticed, that it will be executed only if returned value of appPath != null or its dosent empty.
-            if (!string.IsNullOrEmpty(appPath))
-            {
-                LaunchApplication(appPath);
+                //Some validation variables, f.e. if validationID = false which means that input is not an integer data type 
+                //and obviously it cannot be numerical ID
+                int validationIDNumber = 0;
+                bool validationID = int.TryParse(input, out validationIDNumber);
+
+                //Switch alias to clear and terminate CMD window
+                switch (input.ToLower())
+                {
+                    case "q":
+                        Environment.Exit(0);
+                        break;
+
+                    case "c":
+                        Console.Clear();
+                        break;
+                }
+
+                //Getting path to launch SteamID with Steam API command 
+                string appPath = GetAppPath(@"steam://rungameid/" + input);
+
+                //Another validation steps, I want to be sure that input is not null and it is int data type 
+                if (!string.IsNullOrEmpty(input) && validationID == true)
+                {
+                    Console.WriteLine($"Launching {input} SteamID...");
+                    LaunchGame(appPath);
+                    Console.Write("Press Enter to exit...");
+                    Console.ReadLine();
+                    break;
+                }
+                //Try again)
+                else
+                {
+                    Console.WriteLine("Unkown command.");
+                    continue;
+                }
             }
         }
 
-        //Alias code.
-        //Here you can add games for launch. Dont forget to specified the path.
+        //Method to return the input, I know that I can ommit it, but I guess that look cooler
         static string GetAppPath(string command)
         {
-            switch(command.ToLower())
-            {
-                //Example for Steam games
-                case "deadlock":
-                    return @"steam://rungameid/1422450";
-                //Example for non-Steam games
-                case "factorio":
-                    return @"F:\Factorio\bin\x64\factorio.exe";
-                default:
-                    return null; 
-            }
+            return command;
         }
 
-        static void LaunchApplication(string appPath)
+        //Method which launching game with SteamAPI command (can be ommited to)
+        static void LaunchGame(string appPath)
         {
             Process.Start(appPath);
         }
