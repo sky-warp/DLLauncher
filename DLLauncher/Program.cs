@@ -19,7 +19,7 @@ namespace DLLauncher
             while (true)
             {
                 //Base nvigation
-                Console.Write("Navigation:\tc-Clear\t\tq-Quit\nEnter the Steam ID: ");
+                Console.Write("Navigation:\tc-Clear\t\tq-Quit\t\ts-Search\nEnter the Steam ID: ");
                 string input = Console.ReadLine();
 
                 //Some validation variables, f.e. if validationID = false which means that input is not an integer data type 
@@ -28,14 +28,30 @@ namespace DLLauncher
                 bool validationID = int.TryParse(input, out validationIDNumber);
 
                 //Switch alias to clear and terminate CMD window
-                switch (input.ToLower())
+                switch (input.ToLower().Trim())
                 {
                     case "q":
                         Environment.Exit(0);
+
                         break;
 
                     case "c":
                         Console.Clear();
+
+                        break;
+
+                    case "s":
+                        Console.Write("Enter the game name: ");
+                        string searchGame = Console.ReadLine();
+
+                        string url = GenerateUrl(searchGame);
+                        Console.WriteLine($"Try to search game ID on {url}\n");
+
+                        break;
+
+                    default:
+                        input = null;
+
                         break;
                 }
 
@@ -46,15 +62,18 @@ namespace DLLauncher
                 if (!string.IsNullOrEmpty(input) && validationID == true)
                 {
                     Console.WriteLine($"Launching {input} SteamID...");
+
                     LaunchGame(appPath);
+
                     Console.Write("Press Enter to exit...");
                     Console.ReadLine();
+
                     break;
                 }
                 //Try again)
-                else
+                else if (validationID == false && input != "s" && input != "c")
                 {
-                    Console.WriteLine("Unkown command.");
+                    Console.WriteLine("Unknown command, try again.\n");
                     continue;
                 }
             }
@@ -70,6 +89,17 @@ namespace DLLauncher
         static void LaunchGame(string appPath)
         {
             Process.Start(appPath);
+        }
+
+        //Method to generate the URL
+        static string GenerateUrl(string query)
+        {
+            //Uri class allows us to get acces to URI parts (include URL) 
+            //EscapeDataString method translate our Unicode and special characters to coded-string which uses in URL
+            string codedQuery = Uri.EscapeDataString(query);
+
+            return $"https://steamdb.info/search/?a=all&q={codedQuery}";
+
         }
     }
 }
