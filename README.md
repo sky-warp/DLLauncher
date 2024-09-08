@@ -7,12 +7,18 @@ What this programm about:
 - Its launchins command-line (hope I will switch on GUI and make Desktop version) and prompt user to enter the game name.
 - When the name is prompted - game starts, simple.
 
-Now its working only with "alias" (you need to specifie name which will be associate with executable path) - so user need to enter certain commands not whatever he wants. For now, you can see the example of launching VALVe Deadlock game. I also noticed the difference between launching Steam games and non-Steam games. 
-Obviously, it make this programm more rigid, because you need to always remember certain command for certain game.
-Treat it like pre-pre-pre-pre version of final programm.
+For now, it can launch only Steam games, and only if you specify game ID (you can find ID of any Steam game on SteamDB https://steamdb.info/)
+Its simple:
+
+  1) Enter gane ID
+  2) Enjoy it
+
+If you havent install or recentlr delete the game which ID you entered, but you have it in your Steam library - then steam just offer you to install it. 
+
+This launcher needs a lot of polishing, I knew it, but I know, that step by step I can make a good programm and finish my project, which help me understand C# better and deeply.
+
+Next goal: *Implement feauture that allows user to input game name, so launcher would take SteamDB ID automatically*
 
 This is only the begining. Most of all do it for myself to track the progress of my skills. Anyway, I'll be appreciated for any criticism and help. 
 See ya.
 
-*P.S.*
-*Sry for my ENG*
