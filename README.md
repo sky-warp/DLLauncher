@@ -13,6 +13,8 @@ Its simple:
   1) Enter gane ID
   2) Enjoy it
 
+If you havent install or recentlr delete the game which ID you entered, but you have it in your Steam library - then steam just offer you to install it. 
+
 This launcher needs a lot of polishing, I knew it, but I know, that step by step I can make a good programm and finish my project, which help me understand C# better and deeply.
 
 Next goal: *Implement feauture that allows user to input game name, so launcher would take SteamDB ID automatically*
