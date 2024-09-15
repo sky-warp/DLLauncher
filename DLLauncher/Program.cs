@@ -16,8 +16,12 @@ namespace DLLauncher
     {
         static void Main(string[] args)
         {
-            while (true)
+            bool loopVerif = false;
+            string searchVerif = "";
+
+            do
             {
+            Launching:
                 //Base nvigation
                 Console.Write("Navigation:\tc-Clear\t\tq-Quit\t\ts-Search\nEnter the Steam ID: ");
                 string input = Console.ReadLine();
@@ -31,26 +35,35 @@ namespace DLLauncher
                 switch (input.ToLower().Trim())
                 {
                     case "q":
-                        Environment.Exit(0);
+
+                        //Environment.Exit(0); //You can actually use this option
+                        loopVerif = true;
 
                         break;
 
                     case "c":
+
                         Console.Clear();
 
                         break;
 
                     case "s":
-                        Console.Write("Enter the game name: ");
-                        string searchGame = Console.ReadLine();
 
-                        string url = GenerateUrl(searchGame);
-                        Console.WriteLine($"Try to search game ID on {url}\n");
+                        do
+                        {
+                            Console.Write("Enter the game name: ");
+                            string searchGame = Console.ReadLine();
+
+                            string url = GenerateUrl(searchGame);
+                            Console.WriteLine($"Try to search game ID on {url}\n");
+
+                            Console.WriteLine("Do you want to search for more games? y/n");
+                            searchVerif = Console.ReadLine();
+                        } while (searchVerif != "n");
 
                         break;
 
                     default:
-                        input = null;
 
                         break;
                 }
@@ -61,22 +74,30 @@ namespace DLLauncher
                 //Another validation steps, I want to be sure that input is not null and it is int data type 
                 if (!string.IsNullOrEmpty(input) && validationID == true)
                 {
+
                     Console.WriteLine($"Launching {input} SteamID...");
 
                     LaunchGame(appPath);
 
-                    Console.Write("Press Enter to exit...");
-                    Console.ReadLine();
+                    Console.WriteLine("Do you want to launch for more games? y/n");
+                    searchVerif = Console.ReadLine();
 
-                    break;
+                    if (searchVerif == "y")
+                    {
+                        goto Launching;
+                    }
+                    else
+                    {
+                        loopVerif = true;
+                    }
+
                 }
                 //Try again)
                 else if (validationID == false && input != "s" && input != "c")
                 {
                     Console.WriteLine("Unknown command, try again.\n");
-                    continue;
                 }
-            }
+            } while (loopVerif == false);
         }
 
         //Method to return the input, I know that I can ommit it, but I guess that look cooler
