@@ -10,14 +10,10 @@ What this programm about:
 For now, it can launch only Steam games, and only if you specify game ID (you can find ID of any Steam game on SteamDB https://steamdb.info/)
 Its simple:
 
-  1) Enter gane ID
+  1) Enter game ID
   2) Enjoy it
 
-If you havent install or recentlr delete the game which ID you entered, but you have it in your Steam library - then steam just offer you to install it. 
-
-This launcher needs a lot of polishing, I knew it, but I know, that step by step I can make a good programm and finish my project, which help me understand C# better and deeply.
-
-Next goal: *Implement feauture that allows user to input game name, so launcher would take SteamDB ID automatically*
+If you havent install or recently delete the game which ID you entered, but you have it in your Steam library - then steam just offer you to install it. 
 
 This is only the begining. Most of all do it for myself to track the progress of my skills. Anyway, I'll be appreciated for any criticism and help. 
 See ya.
